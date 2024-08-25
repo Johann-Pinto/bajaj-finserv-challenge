@@ -26,13 +26,16 @@ function App() {
       const parsedJson = JSON.parse(jsonInput);
       setError("");
 
-      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/bfhl`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(parsedJson),
-      });
+      const res = await fetch(
+        `https://api-bajaj-finserv-sashank.vercel.app/bfhl`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(parsedJson),
+        }
+      );
 
       const data = await res.json();
       setResponse(data);
