@@ -1,7 +1,9 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 const app = express();
+app.use(cors());
 const port = 3000;
 
 // Middleware to parse JSON request bodies
@@ -16,9 +18,9 @@ app.post("/bfhl", (req, res) => {
     if (!data || !Array.isArray(data)) {
       return res.json({
         is_success: false,
-        user_id: "",
-        email: "",
-        roll_number: "",
+        user_id: "Sashank_Chaturvedi_04122002",
+        email: "sashankpc19@gmail.com",
+        roll_number: "21BBS0174",
         numbers: [],
         alphabets: [],
         highest_lowercase_alphabet: "",
@@ -46,9 +48,9 @@ app.post("/bfhl", (req, res) => {
     // Response object
     res.json({
       is_success: true,
-      user_id: "name", // Replace with actual data if available
-      email: "email@example.com", // Replace with actual data if available
-      roll_number: "roll_number", // Replace with actual data if available
+      user_id: "Sashank_Chaturvedi_04122002",
+      email: "sashankpc19@gmail.com",
+      roll_number: "21BBS0174",
       numbers: numbers,
       alphabets: alphabets,
       highest_lowercase_alphabet: highestLowercaseAlphabet,
@@ -57,9 +59,9 @@ app.post("/bfhl", (req, res) => {
     // Handle any unexpected errors
     res.json({
       is_success: false,
-      user_id: "",
-      email: "",
-      roll_number: "",
+      user_id: "Sashank_Chaturvedi_04122002",
+      email: "sashankpc19@gmail.com",
+      roll_number: "21BBS0174",
       numbers: [],
       alphabets: [],
       highest_lowercase_alphabet: "",
@@ -73,6 +75,4 @@ app.get("/bfhl", (req, res) => {
 });
 
 // Start the server
-app.listen(port, () => {
-  console.log("Server is running on http://localhost:${port}");
-});
+module.exports = app;
