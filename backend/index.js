@@ -1,57 +1,78 @@
 const express = require("express");
+const bodyParser = require("body-parser");
+
 const app = express();
+const port = 3000;
 
-app.use(express.json());
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
 
-const PORT = process.env.PORT || 3000;
+// POST route for /bfhl
+app.post("/bfhl", (req, res) => {
+  try {
+    const { data } = req.body;
 
-// Utility function to find the highest lowercase alphabet
-const getHighestLowercaseAlphabet = (array) => {
-  const lowercaseAlphabets = array.filter((char) => char >= "a" && char <= "z");
-  return lowercaseAlphabets.sort().slice(-1)[0];
-};
+    // Check if data is present and is an array
+    if (!data || !Array.isArray(data)) {
+      return res.json({
+        is_success: false,
+        user_id: "",
+        email: "",
+        roll_number: "",
+        numbers: [],
+        alphabets: [],
+        highest_lowercase_alphabet: "",
+      });
+    }
 
-// GET method endpoint that returns an operation_code
-app.get("/", (req, res) => {
-  res.status(200).json({ operation_code: "OP123456" });
+    // Initialize arrays to store numbers and alphabets
+    let numbers = [];
+    let alphabets = [];
+    let highestLowercaseAlphabet = "";
+
+    // Loop through the data list and segregate numbers and alphabets
+    data.forEach((item) => {
+      if (typeof item === "string" && !isNaN(item)) {
+        numbers.push(item);
+      } else if (typeof item === "string" && /^[a-zA-Z]$/.test(item)) {
+        alphabets.push(item);
+        // Update highest lowercase alphabet
+        if (item >= "a" && item <= "z" && item > highestLowercaseAlphabet) {
+          highestLowercaseAlphabet = item;
+        }
+      }
+    });
+
+    // Response object
+    res.json({
+      is_success: true,
+      user_id: "name", // Replace with actual data if available
+      email: "email@example.com", // Replace with actual data if available
+      roll_number: "roll_number", // Replace with actual data if available
+      numbers: numbers,
+      alphabets: alphabets,
+      highest_lowercase_alphabet: highestLowercaseAlphabet,
+    });
+  } catch (error) {
+    // Handle any unexpected errors
+    res.json({
+      is_success: false,
+      user_id: "",
+      email: "",
+      roll_number: "",
+      numbers: [],
+      alphabets: [],
+      highest_lowercase_alphabet: "",
+    });
+  }
 });
 
-// POST method endpoint that takes user input and returns the required data
-app.post("/", (req, res) => {
-  const {
-    status,
-    userId,
-    collegeEmailId,
-    collegeRollNumber,
-    numbers,
-    alphabets,
-  } = req.body;
-
-  if (
-    !status ||
-    !userId ||
-    !collegeEmailId ||
-    !collegeRollNumber ||
-    !numbers ||
-    !alphabets
-  ) {
-    return res.status(400).json({ error: "Missing required fields" });
-  }
-
-  const highestLowercaseAlphabet = getHighestLowercaseAlphabet(alphabets);
-
-  res.status(200).json({
-    status,
-    userId,
-    collegeEmailId,
-    collegeRollNumber,
-    numbers,
-    alphabets,
-    highestLowercaseAlphabet,
-  });
+// GET route for /bfhl
+app.get("/bfhl", (req, res) => {
+  res.json({ operation_code: 1 });
 });
 
 // Start the server
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
+app.listen(port, () => {
+  console.log("Server is running on http://localhost:${port}");
 });
