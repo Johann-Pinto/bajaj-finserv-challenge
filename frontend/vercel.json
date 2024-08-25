@@ -2,8 +2,8 @@
     "version": 2,
     "name": "your-project-name",
     "domains": [
-        "example.com",
-        "www.example.com"
+        "bajaj-finserv-sashank.com",
+        "www.bajaj-finserv-sashank.com"
     ],
     "builds": [
         {
