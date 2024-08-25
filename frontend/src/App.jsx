@@ -26,7 +26,7 @@ function App() {
       const parsedJson = JSON.parse(jsonInput);
       setError("");
 
-      const res = await fetch("http://localhost:3000/bfhl", {
+      const res = await fetch(`${import.meta.env.VITE_BACKEND_URL}/bfhl`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

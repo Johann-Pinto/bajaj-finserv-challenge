@@ -1,0 +1,14 @@
+{
+    "version": 2,
+    "name": "your-project-name",
+    "domains": [
+        "example.com",
+        "www.example.com"
+    ],
+    "builds": [
+        {
+            "src": "src/index.html",
+            "use": "@vercel/static"
+        }
+    ]
+}
